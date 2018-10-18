@@ -1,7 +1,10 @@
 import React from "react";
 import {Link} from 'react-router-dom'
-import { createBrowserHistory } from 'history/createBrowserHistory'
-import { withRouter } from "react-router-dom";
+
+import { connect } from 'react-redux';
+import { fetchRepos } from '../actions/action';
+
+
 
 class Search extends React.Component {
   constructor(props) {
@@ -17,35 +20,19 @@ class Search extends React.Component {
     this.searchByUser = this.searchByUser.bind(this);
   }
 
+  searchByUser() {
+    this.props.fetchRepos(this.state.userName);
+  };
+
   handleChange({ target }) {
     this.setState({
       [target.name]: target.value
     });
   }
 
-  searchByUser() {    
-    fetch ("https://api.github.com/users/" + this.state.userName + "/repos")
-      .then ( res => res.json() )
-      .then (
-        (result) => {
-          console.log ('Result of github list => ', result);
-          this.setState ({
-            isLoaded: true,
-            repos: result
-          })
-        
-          //this.props.history.push("/commit");  
-        },
-        (error) => {
-          console.log (`Error fetching githhub => ${error}`);
-        }
-      )      
-  };
- 
 
   render() {
-    //const { userName, isLoaded, repos } = this.state;
-
+    
     return (
       <div>      
           <div className="form-inline">
@@ -65,7 +52,7 @@ class Search extends React.Component {
         <hr/>
         <ul className="list-group">
         {
-          this.state.repos.map( (item, idx) => (
+          this.props.repos.map( (item, idx) => (
           <li className="list-group-item" key={item.name}>
                 
                 <Link 
@@ -92,4 +79,8 @@ class Search extends React.Component {
   }
 } //end of class Search
 
-export default withRouter(Search);
+const mapStateToProps = state => ({
+  repos: state.reducer.repos
+});
+
+export default connect(mapStateToProps, { fetchRepos }) (Search)

@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux';
-import commitReducer from './commitReducer';
+import reducer from './reducer';
 
-export default combineReducers({
-  commits: commitReducer
-});
+export default combineReducers({ reducer });

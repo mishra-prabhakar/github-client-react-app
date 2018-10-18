@@ -1,55 +1,23 @@
 import React from "react";
 import Header from "./Header";
 import { connect } from 'react-redux';
-import { fetchCommits } from '../actions/postActions';
+import { fetchCommits, filterCommits } from '../actions/action';
 
 class Commit extends React.Component {
     constructor(props) {
         super(props);
-    
+
         this.state = {
           isLoaded: false,
           commitText: "",
           commits: [],
           initialCommits: []
         };
-            
-        //this.getCommits = this.getCommits.bind(this);
       }
 
-     /*  getCommits ({githubUser, repoName}) {
-        console.log("Get Commits name => ", repoName);
-    
-        fetch ("https://api.github.com/repos/" + githubUser + "/" + repoName + "/commits")
-          .then ( res => res.json() )
-          .then (
-            (result) => {
-              console.log ("Commit list => ", result);   
-              this.setState ({
-                isLoaded: true,
-                commits: result,
-                initialCommits: result
-              })      
-            },
-            (error) => {
-              console.log (`Error fetching githhub commit => ${error}`);
-            }
-          );
-    
-      };
- */
       componentWillMount() {
-        //this.props.fetchCommits(this.props.location.state);
-        console.log("Component will Mount");
-        this.props.fetchCommits(this.props.location.state);
+        this.props.fetchCommits(this.props.location.state);        
       };
-
-      /* componentDidMount() {
-        console.log("COMMITS COMPONENT LOADED....", this.props.location.state);
-        
-        this.getCommits(this.props.location.state);
-      
-      }; */
 
       handleChange({ target }) {
         this.setState({
@@ -63,14 +31,7 @@ class Commit extends React.Component {
           [target.name]: target.value
         });
 
-        const commitList = this.state.initialCommits;
-
-        let updatedList = commitList.filter( (item) => {
-          return item.commit.message.toLowerCase().search( target.value.toLowerCase() ) !== -1} 
-        );
-
-        this.setState({commits: updatedList});
-
+        this.props.filterCommits(target.value)
       }
 
       render() {
@@ -113,8 +74,8 @@ class Commit extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  commits: state.commits.items
+  commits: state.reducer.commits
 });
 
-export default connect(mapStateToProps, { fetchCommits }) (Commit)
+export default connect(mapStateToProps, { fetchCommits, filterCommits }) (Commit)
 

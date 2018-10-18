@@ -1,2 +1,3 @@
-export const SEARCH_REPO = 'SEARCH_REPO';
+export const FETCH_REPOS = 'FETCH_REPOS';
 export const FETCH_COMMITS = 'FETCH_COMMITS';
+export const FILTER_COMMITS = 'FILTER_COMMITS';
