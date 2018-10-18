@@ -35,11 +35,21 @@ class Commit extends React.Component {
       }
 
       render() {
-
-        const commitItems = this.props.commits.map( (commitItem, idx) => (
-          <li className="list-group-item" key={commitItem.sha}>
+        {/* <li className="list-group-item" key={commitItem.sha}>
                 {commitItem.commit.message}
-          </li>
+          </li> */}
+        const commitItems = this.props.commits.map( (commitItem, idx) => (
+          <tr key={commitItem.sha}>
+            <td>
+            {commitItem.commit.author.name}
+            </td>
+            <td>
+            {commitItem.sha}
+            </td>
+            <td>
+            {commitItem.commit.message}
+            </td>
+          </tr>
         ));
 
         return (          
@@ -63,9 +73,22 @@ class Commit extends React.Component {
                 </div>
               
                 <hr/>
-                <ul className="list-group">
+                {/* <ul className="list-group">
                 {commitItems}
-                </ul> 
+                </ul>  */}
+
+                <table class="table table-hover">
+                <thead>
+                  <tr>                    
+                    <th scope="col">Author</th>
+                    <th scope="col">Commit Id</th>
+                    <th scope="col">Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {commitItems}
+                  </tbody>
+                </table>
             </div>
 
           </div>
