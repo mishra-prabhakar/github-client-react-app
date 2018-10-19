@@ -15,15 +15,17 @@ class Search extends React.Component {
       isLoaded: false
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.searchByUser = this.searchByUser.bind(this);
   }
 
-  searchByUser() {
+   /*
+    #ES6_Feature. Arrow function, in this particular case we can avoid binding step required for searchByUser function because arrow function do not have their own context.
+    If we don't use arrow function, we will have to first bind the function like this this.searchByUser = this.searchByUser.bind(this);
+  */
+  searchByUser = () => {
     this.props.fetchRepos(this.state.userName);
   };
 
-  handleChange({ target }) {
+  handleChange = ({ target }) => {
     this.setState({
       [target.name]: target.value
     });
