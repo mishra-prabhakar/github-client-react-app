@@ -54,14 +54,7 @@ class Commit extends React.Component {
         ));
 
         return (          
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <Header/>
-              </div>              
-            </div>
-            <br/>
-
+          
             <div className="container">
                 <div className="form-inline">            
                   <div className="form-group mx-sm-2">
@@ -103,8 +96,7 @@ class Commit extends React.Component {
                 </table>
                 </InfiniteScroll>
             </div>
-
-          </div>
+          
         );
       }
 }

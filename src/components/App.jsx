@@ -9,21 +9,15 @@ import { Switch, Route } from 'react-router-dom';
 const App = () => (
   
     <div className="container">      
-      <div className="row">
-        <div className="col-md-12">
-          <Header/>
-        </div>        
-      </div>
+      <Header/>
       <br/>
       <div className="row">
         <div className="col-md-12">
-          <Search/>
-         {/*  
           <Switch>
-            <Route exact path="/app/search" component={Search} />  
-            <Route path="/app/commit" render={(props) => <Commit {...props} userName={true} />} />
+            <Route exact path="/" component={Search} /> 
+            <Route exact path="/search" component={Search} />  
+            <Route path="/commit" component={Commit} />} />
           </Switch>
- */}
         </div>      
       </div>
     </div> 

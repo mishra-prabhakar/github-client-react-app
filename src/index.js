@@ -35,10 +35,11 @@ import store from './store';
 const routes = (
   <Provider store={store}>
   <BrowserRouter>
-    <Switch>
+    {/* <Switch>
         <Route exact path="/" component={App} />        
         <Route exact path="/commit" component={Commit} />  
-    </Switch>
+    </Switch> */}
+    <App/>
   </BrowserRouter>
   </Provider>
 )
