@@ -1,7 +1,7 @@
-import { FETCH_COMMITS, FETCH_REPOS, FILTER_COMMITS } from './types';
+import { FETCH_COMMITS, FETCH_REPOS, FILTER_COMMITS, UPDATE_FIELD } from './types';
 
 export const fetchCommits = ({githubUser, repoName}) => (dispatch, getState) => { //#ES6_Feature Function parameter using Object destructuring.
-
+    //const githubUser = getState().reducer.userName;
     let commitLen = getState().reducer.commits.length;
     let pgCount = commitLen > 0 ? (commitLen/20)+1 : 1;
     let initialCommits = getState().reducer.commits;
@@ -21,8 +21,8 @@ export const fetchCommits = ({githubUser, repoName}) => (dispatch, getState) => 
         );
 };
 
-export const fetchRepos = (githubUser) => dispatch => {
-    
+export const fetchRepos = () => (dispatch, getState) => {
+    const githubUser = getState().reducer.userName;
     fetch (`https://api.github.com/users/${githubUser}/repos`)
       .then ( res => res.json() )
       .then (
@@ -48,5 +48,12 @@ export const filterCommits = (searchValue) => (dispatch, getState) => {
   dispatch ({
     type: FILTER_COMMITS,
     payload: updatedList
+  })
+};
+
+export const updateField = (name, value) => dispatch => {
+  dispatch({
+    type: UPDATE_FIELD, 
+    payload: { name, value }
   })
 };

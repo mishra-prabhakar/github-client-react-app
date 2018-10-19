@@ -1,3 +1,4 @@
 export const FETCH_REPOS = 'FETCH_REPOS';
 export const FETCH_COMMITS = 'FETCH_COMMITS';
 export const FILTER_COMMITS = 'FILTER_COMMITS';
+export const UPDATE_FIELD = 'UPDATE_FIELD';

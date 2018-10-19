@@ -1,18 +1,12 @@
 import React from "react";
 import Header from "./Header";
 import { connect } from 'react-redux';
-import { fetchCommits, filterCommits } from '../actions/action';
+import { fetchCommits, filterCommits, updateField } from '../actions/action';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 class Commit extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-          isLoaded: false,
-          commitText: "",
-          pgCount: 0      
-        };
       }
 
       componentWillMount() {
@@ -20,7 +14,7 @@ class Commit extends React.Component {
       };
 
       handleOnChange = ( {target} ) => {        
-        this.setState({ [target.name]: target.value });
+        this.props.updateField(target.name, target.value);
         this.props.filterCommits(target.value)
       }
 
@@ -56,7 +50,7 @@ class Commit extends React.Component {
                   <div className="form-group mx-sm-2">
                     <input className = "form-control" type="search" placeholder="Search commit message" aria-label="Search"
                       name="commitText"
-                      value={this.state.commitText}                     
+                      value={this.props.commitText}                     
                       onChange={this.handleOnChange}
                     />
                   </div>
@@ -94,8 +88,9 @@ class Commit extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  commits: state.reducer.commits
+  commits: state.reducer.commits,
+  githubUser: state.reducer.userName
 });
 
-export default connect(mapStateToProps, { fetchCommits, filterCommits }) (Commit)
+export default connect(mapStateToProps, { fetchCommits, filterCommits, updateField }) (Commit)
 
