@@ -3,7 +3,8 @@ import { FETCH_COMMITS, FETCH_REPOS, FILTER_COMMITS } from '../actions/types';
 const initialState = {
   commits: [],
   initialCommits: [],
-  repos: []
+  repos: [],
+  pgCount: 0
 };
 
 const reducer = (state = initialState, action) => {

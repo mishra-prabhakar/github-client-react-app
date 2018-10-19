@@ -12,8 +12,7 @@ class Search extends React.Component {
 
     this.state = {
       userName: "",
-      isLoaded: false,
-      repos: []
+      isLoaded: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -65,7 +64,7 @@ class Search extends React.Component {
                 </Link>
                 
                 <div>
-                  {item.url}
+                  {item.html_url}
                 </div>
           </li>
 

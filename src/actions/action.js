@@ -1,15 +1,21 @@
 import { FETCH_COMMITS, FETCH_REPOS, FILTER_COMMITS } from './types';
 
-export const fetchCommits = ({githubUser, repoName}) => dispatch => {
-    console.log("POst actions -> ", githubUser, repoName);
-    fetch ("https://api.github.com/repos/" + githubUser + "/" + repoName + "/commits")
+export const fetchCommits = ({githubUser, repoName}) => (dispatch, getState) => { //#ES6_Feature Function parameter using Object destructuring.
+
+    let commitLen = getState().reducer.commits.length;
+    console.log("Commit Length ==> ", commitLen);
+    let pgCount = commitLen > 0 ? (commitLen/20)+1 : 1;
+    console.log("Page Count ==> ", pgCount);
+    let initialCommits = getState().reducer.commits;
+
+    fetch (`https://api.github.com/repos/${githubUser}/${repoName}/commits?per_page=20&page=${pgCount}`) //#ES6_Feature Template literal and string interpolation.
         .then ( res => res.json() )
         .then (
         (commits) => {
             console.log ("Commit list => ", commits);   
             dispatch({
-            type: FETCH_COMMITS,
-            payload: commits
+              type: FETCH_COMMITS,
+              payload: [...initialCommits, ...commits]
             })      
         },
         (error) => {
@@ -20,7 +26,7 @@ export const fetchCommits = ({githubUser, repoName}) => dispatch => {
 
 export const fetchRepos = (githubUser) => dispatch => {
     console.log("Fetch Repos ==> ");
-    fetch ("https://api.github.com/users/" + githubUser + "/repos")
+    fetch (`https://api.github.com/users/${githubUser}/repos`)
       .then ( res => res.json() )
       .then (
         (repos) => {
@@ -38,6 +44,7 @@ export const fetchRepos = (githubUser) => dispatch => {
 
 export const filterCommits = (searchValue) => (dispatch, getState) => {
   console.log("Filtering commits ==> ", getState().reducer.initialCommits);
+  
   const commitList = getState().reducer.initialCommits;
   let updatedList = commitList.filter( (item) => {
     return item.commit.message.toLowerCase().search( searchValue.toLowerCase() ) !== -1} 

@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./Header";
 import { connect } from 'react-redux';
 import { fetchCommits, filterCommits } from '../actions/action';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Commit extends React.Component {
     constructor(props) {
@@ -10,8 +11,7 @@ class Commit extends React.Component {
         this.state = {
           isLoaded: false,
           commitText: "",
-          commits: [],
-          initialCommits: []
+          pgCount: 0      
         };
       }
 
@@ -19,19 +19,15 @@ class Commit extends React.Component {
         this.props.fetchCommits(this.props.location.state);        
       };
 
-      handleChange({ target }) {
-        this.setState({
-          [target.name]: target.value
-        });
-      }
-
-      handleSearch ( {target} ) {
+      handleOnChange = ( {target} ) => {
         console.log("On Search => ", target.value);
-        this.setState({
-          [target.name]: target.value
-        });
+        this.setState({ [target.name]: target.value });
 
         this.props.filterCommits(target.value)
+      }
+
+      fetchMore = () => {
+        this.props.fetchCommits(this.props.location.state);
       }
 
       render() {
@@ -39,17 +35,22 @@ class Commit extends React.Component {
                 {commitItem.commit.message}
           </li> */}
         const commitItems = this.props.commits.map( (commitItem, idx) => (
-          <tr key={commitItem.sha}>
-            <td>
-            {commitItem.commit.author.name}
-            </td>
-            <td>
-            {commitItem.sha}
-            </td>
-            <td>
-            {commitItem.commit.message}
-            </td>
-          </tr>
+          
+            <tr key={commitItem.sha}>
+              <td>
+              {idx+1}            
+              </td>
+              <td>
+              {commitItem.commit.message}            
+              </td>
+              <td>
+              {commitItem.sha}
+              </td>
+              <td>
+              {commitItem.commit.author.name}
+              </td>
+            </tr>
+          
         ));
 
         return (          
@@ -64,10 +65,11 @@ class Commit extends React.Component {
             <div className="container">
                 <div className="form-inline">            
                   <div className="form-group mx-sm-2">
-                    <input className = "form-control" type="search" placeholder="Search commits" aria-label="Search"
+                    <input className = "form-control" type="search" placeholder="Search commit message" aria-label="Search"
                       name="commitText"
                       value={this.state.commitText}
-                      onChange={this.handleSearch.bind(this)}
+                      // onChange={this.handleOnChange.bind(this)}
+                      onChange={this.handleOnChange}
                     />
                   </div>
                 </div>
@@ -76,19 +78,30 @@ class Commit extends React.Component {
                 {/* <ul className="list-group">
                 {commitItems}
                 </ul>  */}
+                <p>Showing result for Github User: <span className="gc-label-bold">{this.props.location.state.githubUser}</span> 
+                  &nbsp;and Repository: <span className="gc-label-bold">{this.props.location.state.repoName}</span>
+                </p>
 
-                <table class="table table-hover">
-                <thead>
-                  <tr>                    
-                    <th scope="col">Author</th>
-                    <th scope="col">Commit Id</th>
-                    <th scope="col">Message</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {commitItems}
+                 <InfiniteScroll
+                  dataLength={this.props.commits.length}
+                  next={this.fetchMore}
+                  hasMore={true}
+                  loader={<h4>Loading...</h4>}
+                >
+                <table className="table table-hover table-font">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>                    
+                      <th scope="col">Message</th>
+                      <th scope="col" className="col-md-4">Commit Id</th>
+                      <th scope="col">Author</th>
+                    </tr>
+                  </thead>
+                  <tbody>                
+                    {commitItems}                                
                   </tbody>
                 </table>
+                </InfiniteScroll>
             </div>
 
           </div>

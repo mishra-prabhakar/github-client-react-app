@@ -6,3 +6,12 @@
 .gc-card {
   margin: 5px;
 }
+
+.table-font {
+  font-size: 0.9rem;
+}
+
+.gc-label-bold {
+  text-transform: capitalize;
+  font-weight: bold;
+}
