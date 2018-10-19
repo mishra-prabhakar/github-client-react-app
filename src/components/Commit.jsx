@@ -36,7 +36,7 @@ class Commit extends React.Component {
           </li> */}
         const commitItems = this.props.commits.map( (commitItem, idx) => (
           
-            <tr key={commitItem.sha}>
+            <tr key={idx}>
               <td>
               {idx+1}            
               </td>
@@ -88,13 +88,13 @@ class Commit extends React.Component {
                   hasMore={true}
                   loader={<h4>Loading...</h4>}
                 >
-                <table className="table table-hover table-font">
+                <table className="table table-hover table-sm table-font">
                   <thead>
                     <tr>
                       <th scope="col">#</th>                    
-                      <th scope="col">Message</th>
-                      <th scope="col" className="col-md-4">Commit Id</th>
-                      <th scope="col">Author</th>
+                      <th scope="col" className="col-md-6">Message</th>
+                      <th scope="col" className="col-md-2">Commit Id</th>
+                      <th scope="col" className="col-md-2">Author</th>
                     </tr>
                   </thead>
                   <tbody>                
