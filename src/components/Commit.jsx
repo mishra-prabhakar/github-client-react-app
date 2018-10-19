@@ -19,10 +19,8 @@ class Commit extends React.Component {
         this.props.fetchCommits(this.props.location.state);        
       };
 
-      handleOnChange = ( {target} ) => {
-        console.log("On Search => ", target.value);
+      handleOnChange = ( {target} ) => {        
         this.setState({ [target.name]: target.value });
-
         this.props.filterCommits(target.value)
       }
 
@@ -31,9 +29,7 @@ class Commit extends React.Component {
       }
 
       render() {
-        {/* <li className="list-group-item" key={commitItem.sha}>
-                {commitItem.commit.message}
-          </li> */}
+        
         const commitItems = this.props.commits.map( (commitItem, idx) => (
           
             <tr key={idx}>
@@ -60,17 +56,13 @@ class Commit extends React.Component {
                   <div className="form-group mx-sm-2">
                     <input className = "form-control" type="search" placeholder="Search commit message" aria-label="Search"
                       name="commitText"
-                      value={this.state.commitText}
-                      // onChange={this.handleOnChange.bind(this)}
+                      value={this.state.commitText}                     
                       onChange={this.handleOnChange}
                     />
                   </div>
                 </div>
               
                 <hr/>
-                {/* <ul className="list-group">
-                {commitItems}
-                </ul>  */}
                 <p>Showing result for Github User: <span className="gc-label-bold">{this.props.location.state.githubUser}</span> 
                   &nbsp;and Repository: <span className="gc-label-bold">{this.props.location.state.repoName}</span>
                 </p>
