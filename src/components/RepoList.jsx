@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux';
-import { fetchRepos, updateField } from '../actions/action';
+import { fetchRepos, updateField } from '../actions/actions';
 
-class Search extends React.Component {
+class RepoList extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -75,4 +75,4 @@ const mapStateToProps = state => ({
   githubUser: state.reducer.userName
 });
 
-export default connect(mapStateToProps, { fetchRepos, updateField }) (Search)
+export default connect(mapStateToProps, { fetchRepos, updateField }) (RepoList)

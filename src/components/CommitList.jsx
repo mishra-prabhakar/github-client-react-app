@@ -1,10 +1,9 @@
 import React from "react";
-import Header from "./Header";
 import { connect } from 'react-redux';
-import { fetchCommits, filterCommits, updateField } from '../actions/action';
+import { fetchCommits, filterCommits, updateField } from '../actions/actions';
 import InfiniteScroll from "react-infinite-scroll-component";
 
-class Commit extends React.Component {
+class CommitList extends React.Component {
     constructor(props) {
         super(props);
       }
@@ -92,5 +91,5 @@ const mapStateToProps = state => ({
   githubUser: state.reducer.userName
 });
 
-export default connect(mapStateToProps, { fetchCommits, filterCommits, updateField }) (Commit)
+export default connect(mapStateToProps, { fetchCommits, filterCommits, updateField }) (CommitList)
 

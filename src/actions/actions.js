@@ -1,10 +1,11 @@
 import { FETCH_COMMITS, FETCH_REPOS, FILTER_COMMITS, UPDATE_FIELD } from './types';
 
 export const fetchCommits = ({githubUser, repoName}) => (dispatch, getState) => { //#ES6_Feature Function parameter using Object destructuring.
-    //const githubUser = getState().reducer.userName;
-    let commitLen = getState().reducer.commits.length;
-    let pgCount = commitLen > 0 ? (commitLen/20)+1 : 1;
-    let initialCommits = getState().reducer.commits;
+    
+    //#ES6_Feature const
+    const commitLen = getState().reducer.commits.length;
+    const pgCount = commitLen > 0 ? (commitLen/20)+1 : 1;
+    const prevCommits = getState().reducer.commits;
 
     fetch (`https://api.github.com/repos/${githubUser}/${repoName}/commits?per_page=20&page=${pgCount}`) //#ES6_Feature Template literal and string interpolation. No need to use + operator and then close, unclose quot mark in the string.
         .then ( res => res.json() )
@@ -12,7 +13,7 @@ export const fetchCommits = ({githubUser, repoName}) => (dispatch, getState) => 
         (commits) => {            
             dispatch({
               type: FETCH_COMMITS,
-              payload: [...initialCommits, ...commits] //#ES6_Feature Spread Operator to concatenate array. As per mozilla doc, it is a better and cleaner way to concatenate.
+              payload: [...prevCommits, ...commits] //#ES6_Feature Spread Operator to concatenate array. As per mozilla doc, it is a better and cleaner way to concatenate.
             })      
         },
         (error) => {

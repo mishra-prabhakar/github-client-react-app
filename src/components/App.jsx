@@ -1,8 +1,7 @@
 import React from "react";
-import Main  from "react";
-import Search from "./Search";
+import RepoList from "./RepoList";
 import Header from "./Header"
-import Commit from './Commit'
+import CommitList from './CommitList'
 import { Switch, Route } from 'react-router-dom';
 
 
@@ -14,9 +13,9 @@ const App = () => (
       <div className="row">
         <div className="col-md-12">
           <Switch>
-            <Route exact path="/" component={Search} /> 
-            <Route exact path="/search" component={Search} />  
-            <Route path="/commit" component={Commit} />} />
+            <Route exact path="/" component={RepoList} /> 
+            <Route exact path="/search" component={RepoList} />  
+            <Route path="/commit" component={CommitList} />} />
           </Switch>
         </div>      
       </div>
